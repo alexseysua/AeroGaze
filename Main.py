@@ -17,7 +17,7 @@ try:
     destlong = float(input())
 
     # Taking off
-    arm_and_takeoff(altitude)
+    arm_and_takeoff(vehicle, altitude)
 
     # Changing to Guided mode
     if vehicle.mode.name != "GUIDED":

@@ -34,7 +34,7 @@ import os
 import platform
 import sys
 from pathlib import Path
-from Distance import GetDistance
+from Rasyolo.getDistance import GetDistance
 import torch
 import uuid
 
