@@ -324,4 +324,4 @@ def run(
 #     opt = parse_opt()
 #     main(opt)
 
-print(run(weights="best.pt", source="pic.png", conf_thres=0.9))
+# print(run(weights="best.pt", source="pic.png", conf_thres=0.9))

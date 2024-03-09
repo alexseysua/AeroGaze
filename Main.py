@@ -1,6 +1,6 @@
 from dronekit import connect, VehicleMode, LocationGlobalRelative
 from Constants import connectionString, baudRate, speed, lAcc, AiSpeed, landingSpeed, altitude, conf, weight
-from Drone.Drone import arm_and_takeoff, get_location_metres
+from Drone.Drone import arm_and_takeoff, get_location_metres, get_distance_metres
 from Camera.Camera import capture_image
 import uuid
 import time
@@ -20,7 +20,7 @@ try:
     # Taking off
     if vehicle.mode.name != "GUIDED":
         vehicle.mode  = VehicleMode("GUIDED")
-        
+
     arm_and_takeoff(vehicle, altitude)
 
     # Changing to Guided mode
@@ -30,7 +30,7 @@ try:
     # Going to Destination
     dest_location = LocationGlobalRelative(destlat, destlong, altitude)
     vehicle.simple_goto(dest_location, groundspeed=speed)
-    while vehicle.location.global_relative_frame.distance_to(dest_location) > 0.05:
+    while get_distance_metres(vehicle.location.global_frame, dest_location) > 0.05:
         time.sleep(1)
 
 
@@ -54,18 +54,18 @@ try:
         leftLocation = get_location_metres(vehicle.location.global_relative_frame, decision[3], vehicle.heading)
         vehicle.simple_goto(forwardLocation, groundspeed=AiSpeed)
         # time.sleep(1)
-        while vehicle.location.global_relative_frame.distance_to(dest_location) > 0.05:
+        while get_distance_metres(vehicle.location.global_frame, dest_location) > 0.05:
             time.sleep(1)
         vehicle.simple_goto(backwardLocation, groundspeed=AiSpeed)
         # time.sleep(1)
-        while vehicle.location.global_relative_frame.distance_to(dest_location) > 0.05:
+        while get_distance_metres(vehicle.location.global_frame, dest_location) > 0.05:
             time.sleep(1)
         vehicle.simple_goto(rightLocation, groundspeed=AiSpeed)
-        while vehicle.location.global_relative_frame.distance_to(dest_location) > 0.05:
+        while get_distance_metres(vehicle.location.global_frame, dest_location) > 0.05:
             time.sleep(1)
         vehicle.simple_goto(leftLocation, groundspeed=AiSpeed)
         # time.sleep(1)
-        while vehicle.location.global_relative_frame.distance_to(dest_location) > 0.05:
+        while get_distance_metres(vehicle.location.global_frame, dest_location) > 0.05:
             time.sleep(1)
         # if moving[0]<lAcc and moving[1]<lAcc and moving[2]<lAcc and moving[3]<lAcc:
         if all(mov < lAcc for mov in decision[:4]):
